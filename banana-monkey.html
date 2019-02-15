@@ -1,0 +1,82 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>Banana Monkey</title>
+
+<script src="https://d309knd7es5f10.cloudfront.net/createjs_1.1_min.js"></script>
+<script src="https://d309knd7es5f10.cloudfront.net/zim_10.js"></script>
+<script src="https://d309knd7es5f10.cloudfront.net/Box2dWeb-2.1.a.3.min.js"></script>
+<script src="https://d309knd7es5f10.cloudfront.net/physics_2.0.js"></script>
+
+<script>
+
+var scaling = "fit";
+var width = 1024;
+var height = 768;
+var color = light;
+var outerColor = dark;
+
+var frame = new Frame(scaling, width, height, color, outerColor);
+frame.on("ready", function() {
+    zog("Ready from ZIM Frame");
+
+    var stage = frame.stage;
+    var stageW = frame.width;
+    var stageH = frame.height;
+
+    // see https://zimjs.com/learn.html for video and code tutorials
+    // see https://zimjs.com/docs.html for documentation
+    // see https://zimjs.com/bits.html for 64 Interactive Media techniques
+
+    // put your code here:
+
+    var physics = new Physics(0);
+
+    var banana = new Circle(50, yellow)
+        .center()
+        .pos(0, null, false, true)
+        .addPhysics({restitution:0.5});
+
+    var monkey = new Circle(50, brown)
+        .center()
+        .pos(700, 200)
+        .addPhysics(false);
+
+    physics.drag();
+
+    // stage.on("mousedown", function (e) {
+    //     zog("mousedown");
+    //     physics.drag();
+    //
+    // })
+
+    var tree = new Rectangle(100, 600, green)
+        .centerReg()
+        .pos(800, null, false, true)
+        .addPhysics(false); // will stay in its position but banana will bounce off it
+
+    banana.contact(function (obj, body) {
+        if (obj == tree) {
+            obj.color = blue;
+        }
+        if (obj == monkey) {
+            zog("hit monkey");
+            physics.remove();
+        }
+    });
+
+    stage.update();
+
+});
+
+</script>
+
+<meta name="viewport" content="width=device-width, user-scalable=no" />
+
+</head>
+
+<body>
+<!-- Canvas with id="myCanvas" is made by ZIM Frame -->
+</body>
+</html>
