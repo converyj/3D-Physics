@@ -1,0 +1,98 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>ZIM Frame - Scroller</title>
+
+<!-- Welcome to ZIM at https://zimjs.com - Code Creativity!              	        -->
+<!-- ZIM runs on the HTML Canvas powered by JavaScript and CreateJS https://createjs.com -->
+<!-- Founded by Inventor Dan Zen - http://danzen.com - Canadian New Media Award Winner 	-->
+<!-- ZIM is free to use. You can donate to help improve ZIM at http://zimjs.com/donate 	-->
+
+<script src="https://d309knd7es5f10.cloudfront.net/createjs_1.1_min.js"></script>
+<script src="https://d309knd7es5f10.cloudfront.net/zim_9.2.1.js"></script>
+<!-- use zimjs.com/distill for minified individual functions! -->
+
+<script>
+
+// SCALING OPTIONS
+// scaling can have values as follows with full being the default
+// "fit"	sets canvas and stage to dimensions and scales to fit inside window size
+// "outside"	sets canvas and stage to dimensions and scales to fit outside window size
+// "full"	sets stage to window size with no scaling
+// "tagID"	add canvas to HTML tag of ID - set to dimensions if provided - no scaling
+
+var scaling = "fit"; // this will resize to fit inside the screen dimensions
+var width = 1920;
+var height = 1180;
+var color = "rgb(1,127,186)"; // ZIM colors like green, blue, pink, faint, clear, etc. available globally
+var outerColor = dark; // any HTML colors like "violet", "#333", etc. fine to use
+var assets = ["spaceguy.png", "spaceguy.json", "clouds_1.png", "clouds_2.png", "ground.png", "rocks.png", "sky.png"];
+var path = "assets/spritesheets/space/";
+
+var frame = new Frame(scaling, width, height, color, outerColor, assets, path, new Waiter({backgroundColor: blue, corner:[30, 30, 0, 0]}));
+frame.on("ready", function() {
+    zog("ready from ZIM Frame"); // logs in console (F12 - choose console)
+
+    var stage = frame.stage;
+    var stageW = frame.width;
+    var stageH = frame.height;
+
+    // see http://zimjs.com/learn.html for video and code tutorials
+    // see http://zimjs.com/docs.html for documentation
+    // see http://zimjs.com/bits.html for 64 Interactive Media techniques
+
+    // put your code here (you can delete this sample code)
+
+    frame.asset("sky.png").addTo();
+
+    var clouds1 = new Scroller(frame.asset("clouds_1.png").addTo())
+    var clouds2 = new Scroller(frame.asset("clouds_2.png").addTo())
+    var rocks = new Scroller(frame.asset("rocks.png").addTo(), .5)
+    var ground = new Scroller(frame.asset("ground.png").addTo())
+    var spaceguy = new Scroller(frame.asset("ground.png").addTo())
+    var guy = new Sprite({json: frame.asset("spaceguy.json")})
+     .sca(2.5)
+     .centerReg()
+     .pos(null, 50, null, true)
+     // .run({loop:true});
+
+    var dynamo = new Dynamo({
+         sprite: guy,
+         speed: 3,
+         reversible: false,
+         flip: true
+    });
+    var accelerator = new Accelerator([dynamo, clouds1, clouds2, rocks, ground]);
+    new MotionController({
+         target: accelerator,
+         type: "mousemove",
+         speed: 100,
+         damp:2,
+         minPercentSpeed: -1000,
+         maxPercentSpeed: 10000
+    })
+    // animate({
+    //      target: accelerator,
+    //      props: {percentSpeed:10*1000},
+    //      time: 5000,
+    //      rewind: true,
+    //      loop: true
+    // })
+
+
+
+    stage.update(); // this is needed to show any changes
+
+}); // end of ready
+
+</script>
+
+<meta name="viewport" content="width=device-width, user-scalable=no" />
+
+</head>
+
+<body>
+<!-- canvas with id="myCanvas" is made by zim Frame -->
+</body>
+</html>
