@@ -18,7 +18,7 @@ var height = 768;
 var color = light;
 var outerColor = dark;
 var assets = "banana.png";
-var path = "images/"; 
+var path = "images/";
 
 var frame = new Frame(scaling, width, height, color, outerColor, assets, path);
 frame.on("ready", function() {
@@ -53,8 +53,8 @@ var backing = pizzazz.makePattern({
         .follow();
 
         physics.drag();
-// physics.scroll(); 
-         // banana.follow(); 
+// physics.scroll();
+         // banana.follow();
 
     var monkey = new Circle(50, brown)
         .center()
@@ -71,7 +71,7 @@ var backing = pizzazz.makePattern({
 
 var rect = {x:backing.x, y:backing.y, width:backing.width, height:backing.height};
     // physics.borders();
-    
+
     physics.remove(physics.borderTop);
     physics.remove(physics.borderRight);
 
@@ -83,10 +83,15 @@ var rect = {x:backing.x, y:backing.y, width:backing.width, height:backing.height
 
 
 
-    var tree = new Rectangle(100, 600, green)
+    var tree = new Rectangle(100, 600, brown)
         .centerReg()
         .pos(null, null, true, true)
         .addPhysics(false); // will stay in its position but banana will bounce off it
+
+	var rect = new Rectangle(100, 100, green)
+       .centerReg()
+       .loc(712, 435)
+       .addPhysics(false); // will stay in its position but banana will bounce off it
 
     // banana.contact(function (obj, body) {
     //     if (obj == tree) {
@@ -95,7 +100,7 @@ var rect = {x:backing.x, y:backing.y, width:backing.width, height:backing.height
     //     if (obj == monkey) {
     //         zog("hit monkey");
     //         banana.removePhysics();
-    //         // banana.removeFrom(); 
+    //         // banana.removeFrom();
     //         stage.update();
     //     }
     // });
