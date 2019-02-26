@@ -10,14 +10,6 @@
 <script src="https://d309knd7es5f10.cloudfront.net/physics_2.0.js"></script>
 <script src="https://d309knd7es5f10.cloudfront.net/pizzazz_03.js"></script>
 
-<!-- <style>
-	#myCanvas {
-		background-image:url("images/background.jpg");
-		background-position: center bottom;
-		background-repeat: no-repeat;
-		transform: scale(.7)
-	}
-</style> -->
 <script>
 
 var scaling = "fit";
@@ -25,7 +17,7 @@ var width = 1280;
 var height = 720;
 var color = light;
 var outerColor = dark;
-var assets = ["banana-1.png", "basket.png", "brick.png", "grass.png", "monkey.png", "trees.png", "background.jpg"];
+var assets = "banana.png";
 var path = "images/";
 
 var frame = new Frame(scaling, width, height, color, outerColor, assets, path);
@@ -42,50 +34,43 @@ frame.on("ready", function() {
 
     // put your code here:
 
-// var bg = frame.asset("background.jpg").sca(.7).center()
+var backing = pizzazz.makePattern({
+        type:"digital",
+        backgroundColor:green,
+        colors:black,
+        size:100,
+        rows:100,
+        cols:200
+    }).alp(1).reg(0,0).center();
 
     var physics = new Physics({gravity:10, scroll:true});
 
-// var rectangle = frame.asset("brick.png").centerReg().pos(null,null,true,true)
-var backing = pizzazz.makePattern({
-       type:"digital",
-       backgroundColor:green,
-       colors:black,
-       size:100,
-       rows:100,
-       cols:200
-   }).alp(1).reg(0,0).center();
+var rectangle = new Rectangle(10, 50, brown).centerReg().pos(null,null,true,true).top()
+    var monkey = new Circle(50, brown)
+        .center()
+        .pos(700, 200)
+        .addPhysics(false);
 
-   // var physics = new Physics({gravity:10, scroll:true});
-
-// var rect = {x:backing.x, y:backing.y, width:backing.width, height:backing.height};
+var rect = {x:backing.x, y:backing.y, width:backing.width, height:backing.height};
     // physics.borders();
 
     physics.remove(physics.borderTop);
     physics.remove(physics.borderRight);
 
-    // physics.debug();
+    physics.debug();
 
 
-    var tree = frame.asset("trees.png")
-    		.sca(.7)
+    var tree = new Rectangle(100, 600, brown)
         .centerReg()
         .pos(null, null, true, true)
         .addPhysics(false); // will stay in its position but banana will bounce off it
 
-	   var monkey = frame.asset("monkey.png")
-	   	 .sca(.7)
-	       .center()
-	       .pos(700, 200)
-	       .addPhysics(false);
-
-	var rect = frame.asset("brick.png")
+	var rect = new Rectangle(100, 100, red)
        .centerReg()
-	  .place()
-	  .drag()
+       .loc(712, 435)
        .addPhysics(false); // will stay in its position but banana will bounce off it
 
-	  var banana = frame.asset("banana-1.png").sca(.2)
+	  var banana = frame.asset("banana.png").sca(.2)
 	 	.centerReg()
 	 	.pos(0, null, false, true)
 	 	.addPhysics({restitution:0.5, contract:10, shape:"circle"})
@@ -106,7 +91,6 @@ var backing = pizzazz.makePattern({
 		//
 	   	//  	physics.drag();
 		// }
-		var basket = frame.asset("basket.png").center()
     banana.contact(function (obj, body) {
         if (obj == tree) {
             obj.color = blue;
