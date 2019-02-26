@@ -17,7 +17,7 @@ var width = 1280;
 var height = 720;
 var color = light;
 var outerColor = dark;
-var assets = "banana.png";
+var assets = ["banana.png", "brick.png", "trees.png", "monkey.png", "basket.png", "grass.png", "background.jpg"];
 var path = "images/";
 
 var frame = new Frame(scaling, width, height, color, outerColor, assets, path);
@@ -45,11 +45,30 @@ var backing = pizzazz.makePattern({
 
     var physics = new Physics({gravity:10, scroll:true});
 
-var rectangle = new Rectangle(10, 50, brown).centerReg().pos(null,null,true,true).top()
-    var monkey = new Circle(50, brown)
-        .center()
-        .pos(700, 200)
+    var ground = frame.asset("grass.png").sca(.7)
+        .centerReg()
+        .pos(null, null, true, true)
+	   // .mov(400,0)
+	var ground2 = ground.clone().mov(10,10)
+
+	   var basket = frame.asset("basket.png").sca(.7)
+    	   .centerReg()
+    	   .pos(null, null, true, true)
+
+    var tree = frame.asset("trees.png").sca(.7)
+   	.centerReg()
+   	.pos(null, null, true, true)
+   	.mov(400,0)
+
+// var rectangle = new Rectangle(10, 50, brown).centerReg().pos(null,null,true,true).top()
+    var monkey1 = frame.asset("monkey.png").sca(.5)
+        .centerReg()
+        .pos(950, 355)
         .addPhysics(false);
+
+	
+
+
 
 var rect = {x:backing.x, y:backing.y, width:backing.width, height:backing.height};
     // physics.borders();
@@ -60,12 +79,10 @@ var rect = {x:backing.x, y:backing.y, width:backing.width, height:backing.height
     physics.debug();
 
 
-    var tree = new Rectangle(100, 600, brown)
-        .centerReg()
-        .pos(null, null, true, true)
-        .addPhysics(false); // will stay in its position but banana will bounce off it
 
-	var rect = new Rectangle(100, 100, red)
+        // .addPhysics(false); // will stay in its position but banana will bounce off it
+
+	var rect = frame.asset("brick.png")
        .centerReg()
        .loc(712, 435)
        .addPhysics(false); // will stay in its position but banana will bounce off it
