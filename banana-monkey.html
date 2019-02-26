@@ -13,8 +13,8 @@
 <script>
 
 var scaling = "fit";
-var width = 1024;
-var height = 768;
+var width = 1280;
+var height = 720;
 var color = light;
 var outerColor = dark;
 var assets = "banana.png";
@@ -45,29 +45,11 @@ var backing = pizzazz.makePattern({
 
     var physics = new Physics({gravity:10, scroll:true});
 
-    var banana = frame.asset("banana.png").sca(.2)
-        .centerReg()
-        .pos(0, null, false, true)
-        .addPhysics({restitution:0.5, contract:2})
-         .control()
-        .follow();
-
-        physics.drag();
-// physics.scroll();
-         // banana.follow();
-
+var rectangle = new Rectangle(10, 50, brown).centerReg().pos(null,null,true,true).top()
     var monkey = new Circle(50, brown)
         .center()
         .pos(700, 200)
         .addPhysics(false);
-
-    // physics.drag();
-
-    // banana.on("mousedown", function (e) {
-    //     zog("mousedown");
-    //     // banana.addPhysics({restitution:0.5});
-    //     // physics.drag();
-    // })
 
 var rect = {x:backing.x, y:backing.y, width:backing.width, height:backing.height};
     // physics.borders();
@@ -75,12 +57,7 @@ var rect = {x:backing.x, y:backing.y, width:backing.width, height:backing.height
     physics.remove(physics.borderTop);
     physics.remove(physics.borderRight);
 
-
-
-
     physics.debug();
-
-
 
 
     var tree = new Rectangle(100, 600, brown)
@@ -88,22 +65,53 @@ var rect = {x:backing.x, y:backing.y, width:backing.width, height:backing.height
         .pos(null, null, true, true)
         .addPhysics(false); // will stay in its position but banana will bounce off it
 
-	var rect = new Rectangle(100, 100, green)
+	var rect = new Rectangle(100, 100, red)
        .centerReg()
        .loc(712, 435)
        .addPhysics(false); // will stay in its position but banana will bounce off it
 
-    // banana.contact(function (obj, body) {
-    //     if (obj == tree) {
-    //         obj.color = blue;
-    //     }
-    //     if (obj == monkey) {
-    //         zog("hit monkey");
-    //         banana.removePhysics();
-    //         // banana.removeFrom();
-    //         stage.update();
-    //     }
-    // });
+	  var banana = frame.asset("banana.png").sca(.2)
+	 	.centerReg()
+	 	.pos(0, null, false, true)
+	 	.addPhysics({restitution:0.5, contract:10, shape:"circle"})
+	 	.control()
+	 	.follow()
+	 	.reg(315, 343)
+		// banana.drag({boundary:new Boundary(banana.x,200, 200, 500)})
+	 	physics.drag();
+
+		// function makeBanana() {
+		// 	var banana = frame.asset("banana.png").sca(.2)
+	   	//  	.centerReg()
+	   	//  	.pos(0, null, false, true)
+	   	//  	.addPhysics({restitution:0.5, contract:10, shape:"circle"})
+	   	//  	.control()
+	   	//  	.follow()
+	   	//  	.reg(315, 343);
+		//
+	   	//  	physics.drag();
+		// }
+    banana.contact(function (obj, body) {
+        if (obj == tree) {
+            obj.color = blue;
+        }
+        // if (obj == monkey) {
+        //     zog("hit monkey");
+        //     banana.removePhysics();
+        //     banana.removeFrom();
+        // }
+	   // if (body == physics.borderBottom) {
+		//    zog("hit")
+	   // 	banana.on("mouseup", function() {
+		// 	zog("mousedown")
+		// 	banana.removePhysics()
+  		//  	// makeBanana();
+  		//  	banana.pos(0, null, false, true).outline()
+	   // })
+   // }
+    });
+
+
 
     stage.update();
 
