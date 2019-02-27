@@ -34,14 +34,10 @@ frame.on("ready", function() {
 
     // put your code here:
 
-var backing = pizzazz.makePattern({
-        type:"digital",
-        backgroundColor:green,
-        colors:black,
-        size:100,
-        rows:100,
-        cols:200
-    }).alp(1).reg(0,0).center();
+    var bg = frame.asset("background.jpg").sca(.7)
+    .centerReg().mov(0,-100)
+
+
 
     var physics = new Physics({gravity:10, scroll:true});
 
@@ -49,7 +45,6 @@ var backing = pizzazz.makePattern({
         .centerReg()
         .pos(null, null, true, true)
 	   // .mov(400,0)
-	var ground2 = ground.clone().mov(10,10)
 
 	   var basket = frame.asset("basket.png").sca(.7)
     	   .centerReg()
@@ -66,11 +61,7 @@ var backing = pizzazz.makePattern({
         .pos(950, 355)
         .addPhysics(false);
 
-	
-
-
-
-var rect = {x:backing.x, y:backing.y, width:backing.width, height:backing.height};
+// var rect = {x:bg.x, y:backing.y, width:backing.width, height:backing.height};
     // physics.borders();
 
     physics.remove(physics.borderTop);
@@ -82,7 +73,7 @@ var rect = {x:backing.x, y:backing.y, width:backing.width, height:backing.height
 
         // .addPhysics(false); // will stay in its position but banana will bounce off it
 
-	var rect = frame.asset("brick.png")
+	var obs = frame.asset("brick.png")
        .centerReg()
        .loc(712, 435)
        .addPhysics(false); // will stay in its position but banana will bounce off it
@@ -112,11 +103,13 @@ var rect = {x:backing.x, y:backing.y, width:backing.width, height:backing.height
         if (obj == tree) {
             obj.color = blue;
         }
-        // if (obj == monkey) {
-        //     zog("hit monkey");
-        //     banana.removePhysics();
-        //     banana.removeFrom();
-        // }
+        if (obj == monkey1) {
+            zog("hit monkey");
+            banana.removePhysics();
+            banana.removeFrom();
+		  monkey1.removePhysics();
+		  monkey1.removeFrom();
+        }
 	   // if (body == physics.borderBottom) {
 		//    zog("hit")
 	   // 	banana.on("mouseup", function() {
