@@ -38,32 +38,34 @@
             // var bg = frame.asset("background.jpg").sca(.7)
             // .centerReg().mov(0, -100)
 
-            var bg = frame.asset("background.jpg").center();
+            var bg = frame.asset("background.jpg").center().sca(.5);
 
 
             var physics = new Physics(10, new Boundary(bg.x, bg.y, bg.width, bg.height), true);
+		  // var physics = new Physics(10);
+
 
             // var physics = new Physics({gravity:10, scroll:true});
 
-            var ground = frame.asset("grass.png").sca(.7)
-                .centerReg()
-                .pos(null, null, true, true)
-            // .mov(400,0)
-
-            var basket = frame.asset("basket.png").sca(.7)
-                .centerReg()
-                .pos(null, null, true, true)
-
-            var tree = frame.asset("trees.png").sca(.7)
-                .centerReg()
-                .pos(null, null, true, true)
-                .mov(400, 0)
+            // var ground = frame.asset("grass.png")
+            //     // .centerReg()
+            //     .loc(0, 0);
+            // // .mov(400,0)
+		  //
+            // var basket = frame.asset("basket.png").sca(.7)
+            //     .centerReg().outline()
+            //     // .pos(null, null, true, true)
+		  //
+            // var tree = frame.asset("trees.png").sca(.7)
+            //     .centerReg()
+            //     .pos(null, null, true, true)
+            //     .mov(400, 0)
 
             // var rectangle = new Rectangle(10, 50, brown).centerReg().pos(null,null,true,true).top()
             var monkey1 = frame.asset("monkey.png").sca(.5)
                 .centerReg()
                 .pos(950, 355)
-            // .addPhysics(false);
+            .addPhysics(false);
 
             // var rect = {x:bg.x, y:backing.y, width:backing.width, height:backing.height};
             // physics.borders();
@@ -94,17 +96,17 @@
 
             makeBanana();
 
-            banana.contact(function (obj, body) {
-                if (obj == tree) {
-                    obj.color = blue;
-                }
-                if (obj == monkey1) {
-                    zog("hit monkey");
-                    banana.removePhysics();
-                    banana.removeFrom();
-                    monkey1.removePhysics();
-                    monkey1.removeFrom();
-                }
+            // banana.contact(function (obj, body) {
+            //     if (obj == tree) {
+            //         obj.color = blue;
+            //     }
+            //     if (obj == monkey1) {
+            //         zog("hit monkey");
+            //         banana.removePhysics();
+            //         banana.removeFrom();
+            //         monkey1.removePhysics();
+            //         monkey1.removeFrom();
+            //     }
                 // if (body == physics.borderBottom) {
                 //    zog("hit")
                 // 	banana.on("mouseup", function() {
@@ -114,13 +116,13 @@
                 //  	banana.pos(0, null, false, true).outline()
                 // })
                 // }
-            });
+            // });
 
 
             function makeBanana() {
                 var banana = frame.asset("banana.png").sca(.2)
                     .centerReg()
-                    .pos(0, stageH * 2)
+                    .pos(0, stageH*2)
                     .addPhysics({ restitution: 0.5, contract: 10, shape: "circle" })
                     .control()
                     .follow()
@@ -128,10 +130,12 @@
 
                 physics.drag();
                 banana.contact(function (obj, body) {
-                    if (obj == monkey) {
+                    if (obj == monkey1) {
                         obj.color = red;
                         banana.removePhysics();
                         banana.removeFrom();
+				    monkey1.removePhysics();
+		              monkey1.removeFrom();
                         makeBanana();
                     }
                 })
