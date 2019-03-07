@@ -1,0 +1,143 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>Banana Monkey Game</title>
+
+<script src="https://d309knd7es5f10.cloudfront.net/createjs_1.1_min.js"></script>
+<script src="https://d309knd7es5f10.cloudfront.net/zim_10.js"></script>
+<script src="https://d309knd7es5f10.cloudfront.net/Box2dWeb-2.1.a.3.min.js"></script>
+<script src="https://d309knd7es5f10.cloudfront.net/physics_2.0.js"></script>
+<!-- <script src="https://d309knd7es5f10.cloudfront.net/pizzazz_03.js"></script> -->
+
+<script>
+
+var scaling = "fit";
+var width = 1280;
+var height = 720;
+var color = light;
+var outerColor = dark;
+var assets = ["banana.png", "background.jpg"];
+var path = "images/";
+
+var frame = new Frame(scaling, width, height, color, outerColor, assets, path);
+frame.on("ready", function() {
+    zog("Ready from ZIM Frame");
+
+    var stage = frame.stage;
+    var stageW = frame.width;
+    var stageH = frame.height;
+
+    // see https://zimjs.com/learn.html for video and code tutorials
+    // see https://zimjs.com/docs.html for documentation
+    // see https://zimjs.com/bits.html for 64 Interactive Media techniques
+
+    // put your code here:
+
+    // var background = pizzazz.makePattern({
+    //     type:"digital",
+    //     backgroundColor:green,
+    //     colors:black,
+    //     size:100,
+    //     rows:100,
+    //     cols:200
+    // }).alp(1).reg(0, 0).center();
+
+    // var physics = new Physics({gravity:10, scroll:true});
+    // var backing = {x:background.x, y:background.y, width:background.width, height:background.height};
+    // physics.borders();
+    // physics.remove(physics.borderTop);
+    // physics.remove(physics.borderRight);
+    // physics.remove(physics.borderBottom);
+    // physics.remove(physics.borderLeft);
+
+    var background = frame.asset("background.jpg").center();
+
+    var physics = new Physics(10, new Boundary(background.x, background.y, background.width, background.height), true);
+
+    // var rectangle = new Rectangle(10, 50, brown)
+    //     .centerReg()
+    //     .pos(null, null, true, true)
+    //     .top();
+
+    // physics.debug();
+
+    var monkey = new Circle(50, blue)
+        .centerReg()
+        .pos(100, 450, true, true)
+        .addPhysics(false); // set to false and it will stay in its position
+
+    var tree = new Rectangle(100, 600, brown)
+        .centerReg()
+        .pos(null, null, true, true)
+        .addPhysics(false);
+
+	var obstacle = new Rectangle(100, 100, blue)
+       .centerReg()
+       .pos(850, 400)
+       .addPhysics(false);
+
+    // var banana = frame.asset("banana.png").sca(.2)
+    //  	.centerReg()
+    //  	.pos(0, null, false, true)
+    //  	.addPhysics({restitution:0.5, contract:10, shape:"circle"})
+    //  	.control()
+    //  	.follow()
+    //  	.reg(315, 343)
+    // 	banana.drag({boundary:new Boundary(banana.x,200, 200, 500)})
+    //  	physics.drag();
+
+    makeBanana();
+    function makeBanana() {
+        var banana = frame.asset("banana.png")
+        .sca(.2)
+        .centerReg()
+        .pos(0, null, false, true)
+        .addPhysics({restitution:0.5, contract:10, shape:"circle"})
+        .control()
+        .follow()
+        physics.drag();
+        banana.contact(function (obj, body) {
+            if (obj == monkey) {
+                obj.color = red;
+                banana.removePhysics();
+                banana.removeFrom();
+                makeBanana();
+            }
+        })
+    }
+
+    // banana.contact(function (obj, body) {
+    //     if (obj == monkey) {
+    //         obj.color = red;
+    //         banana.removePhysics();
+    //         banana.removeFrom();
+    //     }
+    //     if (obj == monkey) {
+    //         zog("hit monkey");
+    //         banana.removePhysics();
+    //         banana.removeFrom();
+    //     }
+	//    if (body == physics.borderBottom) {
+    //        banana.on("mouseup", function() {
+    //            banana.removePhysics()
+    //            makeBanana();
+    //            banana.pos(0, null, false, true).outline()
+    //        })
+    //    }
+    // });
+
+    stage.update();
+
+});
+
+</script>
+
+<meta name="viewport" content="width=device-width, user-scalable=no" />
+
+</head>
+
+<body>
+<!-- Canvas with id="myCanvas" is made by ZIM Frame -->
+</body>
+</html>
