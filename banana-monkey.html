@@ -34,15 +34,16 @@
 
 
             var physics = new Physics(10, new Boundary(bg.x, bg.y, bg.width, bg.height), true);
-            physics.debug();
+            // physics.debug();
 
-            var monkey1 = frame.asset("monkey.png")
+            var monkey0 = frame.asset("monkey.png")
                 .sca(.5)
                 .centerReg()
                 .loc(-38, 1225)
                 .addPhysics(false); // will stay in its location
-            var monkey2 = monkey1.clone().addTo().loc(413, 1381).addPhysics(false);
-            var monkey3 = monkey2.clone().addTo().loc(1200, 959).addPhysics(false);
+            var monkey1 = monkey0.clone().addTo().loc(413, 1381).addPhysics(false);
+            var monkey2 = monkey1.clone().addTo().loc(1200, 959).addPhysics(false);
+            var monkeys = [monkey0, monkey1, monkey2];
             var obstacle = frame.asset("brick.png").centerReg().loc(712, 435).addPhysics(false);
 
             makeBanana();
@@ -59,29 +60,40 @@
                     physics.drag();
                 }
 
-                banana.contact(function (obj, body) {
-                    if (obj == monkey1) {
-                        banana.removePhysics();
-                        banana.removeFrom();
-                        monkey1.removePhysics();
-                        monkey1.removeFrom();
-                        makeBanana();
+            // for (var i = 0; i < array.length; i++) {
+            //     array[i]
+            // }
+
+            banana.contact(function (obj, body) {
+                for(var i = 0; i < monkeys.length; i++) {
+                    zog(monkeys)
+                    if (obj == monkeys[i]) {
+                        zog(i)
+                        timeout(200, () => {
+                            monkeys[i].removePhysics();
+                            monkeys[i].removeFrom();
+                            banana.removePhysics();
+                            banana.removeFrom();
+                            makeBanana();
+                            return;
+                        })
                     }
-                    if (obj == monkey2) {
-                        banana.removePhysics();
-                        banana.removeFrom();
-                        monkey2.removePhysics();
-                        monkey2.removeFrom();
-                        makeBanana();
-                    }
-                    if (obj == monkey3) {
-                        banana.removePhysics();
-                        banana.removeFrom();
-                        monkey3.removePhysics();
-                        monkey3.removeFrom();
-                        makeBanana();
-                    }
-                });
+                }
+                // if (obj == monkey2) {
+                //     banana.removePhysics();
+                //     banana.removeFrom();
+                //     monkey2.removePhysics();
+                //     monkey2.removeFrom();
+                //     makeBanana();
+                // }
+                // if (obj == monkey3) {
+                //     banana.removePhysics();
+                //     banana.removeFrom();
+                //     monkey3.removePhysics();
+                //     monkey3.removeFrom();
+                //     makeBanana();
+                // }
+            });
 
             stage.update();
 
