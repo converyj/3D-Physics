@@ -30,100 +30,41 @@
 
             // put your code here:
 
+            // scrolling background
             var bg = frame.asset("background.jpg").center();
-
-
             var physics = new Physics(10, new Boundary(bg.x, bg.y, bg.width, bg.height), true);
-            // physics.debug();
 
-            var monkey0 = frame.asset("monkey.png")
-                .sca(.5)
+            // assets
+            var monkey1 = frame.asset("monkey.png").sca(.5).centerReg().loc(-38, 1225).addPhysics(false);
+            var monkey2 = monkey1.clone().loc(413, 1381).addPhysics(false);
+            var monkey3 = monkey2.clone().loc(1200, 959).addPhysics(false);
+            var obstacle1 = frame.asset("brick.png").centerReg().loc(200, 1300).addPhysics(false);
+            var obstacle2 = obstacle1.clone().loc(1000, 1200).addPhysics(false);
+            var banana = frame.asset("banana.png")
+                .sca(.2)
                 .centerReg()
-                .loc(-38, 1225)
-                .addPhysics(false); // will stay in its location
-            var monkey1 = monkey0.clone().addTo().loc(413, 1381).addPhysics(false);
-            var monkey2 = monkey1.clone().addTo().loc(1200, 959).addPhysics(false);
-            var monkeys = [monkey0, monkey1, monkey2];
-            var obstacle = frame.asset("brick.png").centerReg().loc(712, 435).addPhysics(false);
+                .loc(-400, stageH*2)
+                .addPhysics({ restitution: 0.3, contract: 10, shape: "circle" })
+                .control()
+                .follow()
+                .reg(315, 343)
+                physics.drag();
 
-            makeBanana();
-            var banana;
-            function makeBanana() {
-                banana = frame.asset("banana.png")
-                    .sca(.2)
-                    .centerReg()
-                    .loc(-400, stageH*2)
-                    .addPhysics({ restitution: 0.5, contract: 10, shape: "circle" })
-                    .control()
-                    .follow()
-                    .reg(315, 343)
-                    physics.drag();
+            // if banana hits the monkey, remove the monkey
+            banana.contact(function (obj, body) {
+                if (obj == monkey1) {
+                    obj.removePhysics();
+                    obj.removeFrom();
                 }
-
-            // for (var i = 0; i < array.length; i++) {
-            //     array[i]
-            // }
-
-            // VERSION 1 HIT TESTS
-           //  banana.contact(function (obj, body) {
-           //      if (obj == monkey1) {
-           //          banana.removePhysics();
-           //          banana.removeFrom();
-           //          monkey1.removePhysics();
-           //          monkey1.removeFrom();
-           //          makeBanana();
-           //      }
-           //      if (obj == monkey2) {
-           //          banana.removePhysics();
-           //          banana.removeFrom();
-           //          monkey2.removePhysics();
-           //          monkey2.removeFrom();
-           //          makeBanana();
-           //      }
-           //      if (obj == monkey3) {
-           //          banana.removePhysics();
-           //          banana.removeFrom();
-           //          monkey3.removePhysics();
-           //          monkey3.removeFrom();
-           //          makeBanana();
-           //      }
-           // });
-
-            // VERSION 2 JAVASCRIPT LOOP
-            // banana.contact(function (obj, body) {
-            //     for(var i = 0; i < monkeys.length; i++) {
-            //         if (obj == monkeys[i]) {
-            //             zog(i+"okojpijhioh")
-            //             timeout(200, () => {
-            //                 monkeys[i].removePhysics();
-            //                 monkeys[i].removeFrom();
-            //                 zog("touch")
-            //                 banana.removePhysics();
-            //                 banana.removeFrom();
-            //                 makeBanana();
-            //                 return;
-            //             });
-            //         }
-            //     }
-            // });
-
-            // VERSION 3 ZIM LOOP 
-            loop(3, function (i) {
-                banana.contact(function (obj, body) {
-                    if (obj == monkeys[i]) {
-                        zog(i+"okojpijhioh")
-                        timeout(200, () => {
-                            monkeys[i].removePhysics();
-                            monkeys[i].removeFrom();
-                            zog("touch")
-                            banana.removePhysics();
-                            banana.removeFrom();
-                            makeBanana();
-                            return;
-                        })
-                    }
-                })
-            }, true);
+                if (obj == monkey2) {
+                    obj.removePhysics();
+                    obj.removeFrom();
+                }
+                if (obj == monkey3) {
+                    obj.removePhysics();
+                    obj.removeFrom();
+                }
+            });
 
             stage.update();
 

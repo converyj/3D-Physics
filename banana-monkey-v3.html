@@ -1,0 +1,167 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Banana Monkey</title>
+
+    <script src="https://d309knd7es5f10.cloudfront.net/createjs_1.1_min.js"></script>
+    <script src="https://d309knd7es5f10.cloudfront.net/zim_10.js"></script>
+    <script src="https://d309knd7es5f10.cloudfront.net/Box2dWeb-2.1.a.3.min.js"></script>
+    <script src="https://d309knd7es5f10.cloudfront.net/physics_2.0.js"></script>
+
+    <script>
+
+        var scaling = "fit";
+        var width = 1280;
+        var height = 720;
+        var color = light;
+        var outerColor = dark;
+        var assets = ["banana.png", "brick.png", "trees.png", "monkey.png", "basket.png", "grass.png", "background.jpg"];
+        var path = "images/";
+
+        var frame = new Frame(scaling, width, height, color, outerColor, assets, path);
+        frame.on("ready", function () {
+            zog("Ready from ZIM Frame");
+
+            var stage = frame.stage;
+            var stageW = frame.width;
+            var stageH = frame.height;
+
+            // put your code here:
+
+            var bg = frame.asset("background.jpg").center();
+
+
+            var physics = new Physics(10, new Boundary(bg.x, bg.y, bg.width, bg.height), true);
+            // physics.debug();
+
+            var monkey1 = frame.asset("monkey.png")
+                .sca(.5)
+                .centerReg()
+                .loc(-38, 1225)
+                .addPhysics(false); // will stay in its location
+            var monkey2 = monkey1.clone().loc(413, 1381).addPhysics(false);
+            var monkey3 = monkey2.clone().loc(1200, 959).addPhysics(false);
+            var obstacle1 = frame.asset("brick.png").centerReg().loc(200, 1300).addPhysics(false);
+            var obstacle2 = obstacle1.clone().loc(1000, 1200).addPhysics(false);
+            // new Grid();
+
+            makeBanana();
+            var banana;
+            function makeBanana() {
+                banana = frame.asset("banana.png")
+                    .sca(.2)
+                    .centerReg()
+                    .loc(-400, stageH*2)
+                    .addPhysics({ restitution: 0.3, contract: 10, shape: "circle" })
+                    .control()
+                    .follow()
+                    .reg(315, 343)
+                    physics.drag();
+                }
+
+            // banana.contact(function (obj, body) {
+            //     loop(monkeys, function (monkey) {
+            //         if (obj == monkey) {
+            //             timeout(200, () => {
+            //                 monkey.removePhysics();
+            //                 monkey.removeFrom();
+            //                 zog("touch")
+            //                 banana.removePhysics();
+            //                 banana.removeFrom();
+            //                 makeBanana();
+            //                 return;
+            //             })
+            //         }
+            //     }, true)
+            // })
+
+            // for (var i = 0; i < array.length; i++) {
+            //     array[i]
+            // }
+
+            // VERSION 1 HIT TESTS
+            banana.contact(function (obj, body) {
+                if (obj == monkey1) {
+                    // timeout(200, () => {
+                        // banana.removePhysics();
+                        // banana.removeFrom();
+                        obj.removePhysics();
+                        obj.removeFrom();
+                        // makeBanana();
+                    // })
+                    // monkey1.noContact()
+                }
+                if (obj == monkey2) {
+                    zog("touch monkey2")
+                    // timeout(200, () => {
+                        // banana.removePhysics();
+                        // banana.removeFrom();
+                        obj.removePhysics();
+                        obj.removeFrom();
+                        // makeBanana();
+                    // })
+                }
+                if (obj == monkey3) {
+                    // timeout(200, () => {
+                        // banana.removePhysics();
+                        // banana.removeFrom();
+                        obj.removePhysics();
+                        obj.removeFrom();
+                        // makeBanana();
+                    // })
+                }
+           });
+
+            // VERSION 2 JAVASCRIPT LOOP
+            // banana.contact(function (obj, body) {
+            //     for(var i = 0; i < monkeys.length; i++) {
+            //         if (obj == monkeys[i]) {
+            //             zog(i+"okojpijhioh")
+            //             timeout(200, () => {
+            //                 monkeys[i].removePhysics();
+            //                 monkeys[i].removeFrom();
+            //                 zog("touch")
+            //                 banana.removePhysics();
+            //                 banana.removeFrom();
+            //                 makeBanana();
+            //                 return;
+            //             });
+            //         }
+            //     }
+            // });
+
+            // VERSION 3 ZIM LOOP
+            // loop(3, function (i) {
+            //     banana.contact(function (obj, body) {
+            //         if (obj == monkeys[i]) {
+            //             zog(i+"okojpijhioh")
+            //             timeout(200, () => {
+            //                 monkeys[i].removePhysics();
+            //                 monkeys[i].removeFrom();
+            //                 zog("touch")
+            //                 banana.removePhysics();
+            //                 banana.removeFrom();
+            //                 makeBanana();
+            //                 return;
+            //             })
+            //         }
+            //     })
+            // }, true);
+
+            stage.update();
+
+        });
+
+    </script>
+
+    <meta name="viewport" content="width=device-width, user-scalable=no" />
+
+</head>
+
+<body>
+    <!-- Canvas with id="myCanvas" is made by ZIM Frame -->
+</body>
+
+</html>
