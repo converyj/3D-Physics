@@ -64,36 +64,66 @@
             //     array[i]
             // }
 
-            banana.contact(function (obj, body) {
-                for(var i = 0; i < monkeys.length; i++) {
-                    zog(monkeys)
+            // VERSION 1 HIT TESTS
+           //  banana.contact(function (obj, body) {
+           //      if (obj == monkey1) {
+           //          banana.removePhysics();
+           //          banana.removeFrom();
+           //          monkey1.removePhysics();
+           //          monkey1.removeFrom();
+           //          makeBanana();
+           //      }
+           //      if (obj == monkey2) {
+           //          banana.removePhysics();
+           //          banana.removeFrom();
+           //          monkey2.removePhysics();
+           //          monkey2.removeFrom();
+           //          makeBanana();
+           //      }
+           //      if (obj == monkey3) {
+           //          banana.removePhysics();
+           //          banana.removeFrom();
+           //          monkey3.removePhysics();
+           //          monkey3.removeFrom();
+           //          makeBanana();
+           //      }
+           // });
+
+            // VERSION 2 JAVASCRIPT LOOP
+            // banana.contact(function (obj, body) {
+            //     for(var i = 0; i < monkeys.length; i++) {
+            //         if (obj == monkeys[i]) {
+            //             zog(i+"okojpijhioh")
+            //             timeout(200, () => {
+            //                 monkeys[i].removePhysics();
+            //                 monkeys[i].removeFrom();
+            //                 zog("touch")
+            //                 banana.removePhysics();
+            //                 banana.removeFrom();
+            //                 makeBanana();
+            //                 return;
+            //             });
+            //         }
+            //     }
+            // });
+
+            // VERSION 3 ZIM LOOP 
+            loop(3, function (i) {
+                banana.contact(function (obj, body) {
                     if (obj == monkeys[i]) {
-                        zog(i)
+                        zog(i+"okojpijhioh")
                         timeout(200, () => {
                             monkeys[i].removePhysics();
                             monkeys[i].removeFrom();
+                            zog("touch")
                             banana.removePhysics();
                             banana.removeFrom();
                             makeBanana();
                             return;
                         })
                     }
-                }
-                // if (obj == monkey2) {
-                //     banana.removePhysics();
-                //     banana.removeFrom();
-                //     monkey2.removePhysics();
-                //     monkey2.removeFrom();
-                //     makeBanana();
-                // }
-                // if (obj == monkey3) {
-                //     banana.removePhysics();
-                //     banana.removeFrom();
-                //     monkey3.removePhysics();
-                //     monkey3.removeFrom();
-                //     makeBanana();
-                // }
-            });
+                })
+            }, true);
 
             stage.update();
 
