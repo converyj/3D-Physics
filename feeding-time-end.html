@@ -29,7 +29,7 @@
             var background = frame.asset("intro-background.png").addTo();
             var clouds = new Scroller(frame.asset("intro-clouds.png").addTo(), 0.5);
 
-            var instructions = new Label({
+            var congrats = new Label({
                 text:"You did it! You fed all the monkeys!",
                 font:"Montserrat",
                 color:"white",
@@ -38,7 +38,7 @@
                 backgroundBorderColor:"#1c1c1c",
                 corner:10,
                 padding:25,
-                labelWidth:500,
+                labelWidth:400,
                 lineHeight:40
             }).centerReg().loc(640, 260);
 
@@ -54,7 +54,7 @@
                 padding:25
             });
 
-            replay.centerReg().loc(640, 420).on("click", function() {location.href = "feeding-time-intro.html"});
+            replay.centerReg().loc(640, 420).on("click", function() {location.href = "feeding-time-game.html"});
 
             stage.update();
 
