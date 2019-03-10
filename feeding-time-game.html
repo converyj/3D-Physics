@@ -48,22 +48,41 @@
                 .reg(315, 343)
                 physics.drag();
 
+            var monkeys = 0
             // if banana hits the monkey, remove the monkey
             banana.contact(function (obj, body) {
                 if (obj == monkey1) {
+                    monkeys++; 
+                    zog(monkeys);
                     obj.removePhysics();
                     obj.removeFrom();
                 }
                 if (obj == monkey2) {
+                    monkeys++; 
+                    zog(monkeys);
+
                     obj.removePhysics();
                     obj.removeFrom();
                 }
                 if (obj == monkey3) {
+                    monkeys++; 
+                    zog(monkeys);
+
                     obj.removePhysics();
                     obj.removeFrom();
-                    zgo("feeding-time-end.html")
+                    
                 }
+
+                if (monkeys == 3) {
+                    timeout(2000, () => {
+                        zog("hit")
+                        zgo("feeding-time-end.html")
+                    })
+                }; 
+                
             });
+
+            
 
             stage.update();
 
