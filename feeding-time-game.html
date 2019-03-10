@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>Banana Monkey</title>
+    <title>Feeding Time Game</title>
 
     <script src="https://d309knd7es5f10.cloudfront.net/createjs_1.1_min.js"></script>
     <script src="https://d309knd7es5f10.cloudfront.net/zim_10.js"></script>
@@ -16,19 +16,17 @@
         var width = 1280;
         var height = 720;
         var color = light;
-        var outerColor = dark;
+        var outerColor = "#42919a";
         var assets = ["banana.png", "brick.png", "trees.png", "monkey.png", "basket.png", "grass.png", "background.jpg"];
         var path = "images/";
 
-        var frame = new Frame(scaling, width, height, color, outerColor, assets, path);
+        var frame = new Frame(scaling, width, height, color, outerColor, assets, path, new Waiter({foregroundColor: white, backgroundColor: "#42919a"}));
         frame.on("ready", function () {
             zog("Ready from ZIM Frame");
 
             var stage = frame.stage;
             var stageW = frame.width;
             var stageH = frame.height;
-
-            // put your code here:
 
             // scrolling background
             var bg = frame.asset("background.jpg").center();

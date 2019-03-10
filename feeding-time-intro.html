@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Feeding Time Intro</title>
+
+    <script src="https://d309knd7es5f10.cloudfront.net/createjs_1.1_min.js"></script>
+    <script src="https://d309knd7es5f10.cloudfront.net/zim_10.js"></script>
+
+    <script>
+
+        var scaling = "fit";
+        var width = 1280;
+        var height = 720;
+        var color = light;
+        var outerColor = "#42919a";
+        var assets = ["intro-background.png", "intro-clouds.png"];
+        var path = "images/";
+
+        var frame = new Frame(scaling, width, height, color, outerColor, assets, path, new Waiter({foregroundColor: white, backgroundColor: "#42919a"}));
+        frame.loadAssets({font:"Montserrat", src:"https://fonts.googleapis.com/css?family=Montserrat"});
+        frame.on("ready", function() {
+            zog("ready from ZIM Frame");
+
+            var stage = frame.stage;
+            var stageW = frame.width;
+            var stageH = frame.height;
+
+            var background = frame.asset("intro-background.png").addTo();
+            var clouds = new Scroller(frame.asset("intro-clouds.png").addTo(), 0.5);
+
+            var instructions = new Label({
+                text:"Feed all the monkeys by picking up the banana and throwing it at them!",
+                font:"Montserrat",
+                color:"white",
+                align:"center",
+                backgroundColor:"#42919a",
+                backgroundBorderColor:"#1c1c1c",
+                corner:10,
+                padding:25,
+                labelWidth:500,
+                lineHeight:40
+            }).centerReg().loc(640, 260);
+
+            var startGame = new Label({
+                text:"Start",
+                font:"Montserrat",
+                color:"white",
+                rollColor:"#1c1c1c",
+                align:"center",
+                backgroundColor:"#42919a",
+                backgroundBorderColor:"#1c1c1c",
+                corner:10,
+                padding:25
+            });
+
+            startGame.centerReg().loc(640, 420).on("click", function() {location.href = "banana-monkey.html"});
+
+            stage.update();
+
+        });
+
+    </script>
+
+    <meta name="viewport" content="width=device-width, user-scalable=no" />
+
+</head>
+
+<body>
+    <!-- Canvas with id="myCanvas" is made by ZIM Frame -->
+</body>
+</html>
